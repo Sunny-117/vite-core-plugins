@@ -5,13 +5,50 @@ export default function demoPlugin(enforce?: 'pre' | 'post'): Plugin {
     name: 'demo-plugin',
     enforce,
     buildStart() {
-      console.log('buildStart', enforce)
+      // console.log('buildStart', enforce)
     },
     resolveId() {
-      console.log('解析某个文件的时候才会调用', enforce)
+      // console.log('解析某个文件的时候才会调用', enforce)
     },
     load() {
-      console.log('load', enforce)
+      // console.log('load', enforce)
+    },
+    config(userConfig) {
+      return {
+        resolve: {
+          alias: {
+            '@demo': './src/App.tsx',
+          },
+        },
+      }
+    },
+    configResolved(config) {
+      // console.log('最终所有插件执行完毕后最终会被使用的config', config.resolve)
+    },
+    configureServer(server) {
+      // 直接使用，会把中间件放在vite中间件之前执行
+      // 返回函数：会把这个中间件放在vite中间件后面执行
+      server.middlewares.use((req, res, next) => {
+        if (req.url === '/test') {
+          res.end('hello vite plugin')
+        } else {
+          next()
+        }
+      })
+    },
+    transformIndexHtml(html) {
+      // return html.replace('id="root"', 'id="foo"')
+    },
+    handleHotUpdate(ctx) {
+      // console.log(ctx, 'handleHotUpdate')
+      // 热更新定制化
+      ctx.server.ws.send({
+        type: 'custom',
+        event: 'test',
+        data: {
+          hello: 'world',
+        },
+      })
     },
   }
 }
