@@ -1,4 +1,4 @@
-# project-name [![npm](https://img.shields.io/npm/v/project-name.svg)](https://npmjs.com/package/project-name)
+# vite-plugins [![npm](https://img.shields.io/npm/v/project-name.svg)](https://npmjs.com/package/project-name)
 
 ## Install
 
