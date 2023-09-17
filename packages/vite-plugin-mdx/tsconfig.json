@@ -11,6 +11,6 @@
     "resolveJsonModule": true,
     "types": ["node"]
   },
-  "include": ["src", "tests"],
+  "include": ["src", "tests", "mdx.d.ts"],
   "exclude": ["tests/fixtures"]
 }

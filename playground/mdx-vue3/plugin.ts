@@ -6,6 +6,7 @@ interface Options {
   include?: FilterPattern
   exclude?: FilterPattern
 }
+// eslint-disable-next-line import/no-default-export
 export default function pluginMdx(options: Options = {}): Plugin {
   return {
     name: 'vite-plugin-mdx',
