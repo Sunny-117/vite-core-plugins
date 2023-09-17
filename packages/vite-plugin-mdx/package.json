@@ -1,7 +1,7 @@
 {
   "name": "vite-plugin-mdx",
-  "version": "0.0.0",
-  "description": "My awesome typescript library",
+  "version": "0.0.1",
+  "description": "mdx plugin for vite",
   "license": "MIT",
   "files": [
     "dist"
@@ -9,24 +9,16 @@
   "main": "./dist/index.js",
   "module": "./dist/index.mjs",
   "types": "./dist/index.d.ts",
-  "exports": {
-    ".": {
-      "types": {
-        "require": "./dist/index.d.ts",
-        "import": "./dist/index.d.mts"
-      },
-      "require": "./dist/index.js",
-      "import": "./dist/index.mjs"
-    },
-    "./*": "./*"
-  },
   "publishConfig": {
     "access": "public"
   },
   "scripts": {
     "build": "tsup"
   },
-  "devDependencies": {},
+  "devDependencies": {
+    "tsup": "^7.2.0",
+    "vite": "^4.4.5"
+  },
   "engines": {
     "node": ">=14.19.0"
   }

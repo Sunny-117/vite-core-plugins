@@ -1,17 +1,8 @@
 import { defineConfig } from 'vite'
 import react from '@vitejs/plugin-react'
-import demoPlugin from './src/demo-plugin'
+import pluginMdx from '../../packages/vite-plugin-mdx/dist/index.mjs'
 
 // https://vitejs.dev/config/
 export default defineConfig({
-  plugins: [react(), demoPlugin('post'), demoPlugin(), demoPlugin('pre')],
-  resolve: {
-    alias: {
-      '@foo': './src/main.tsx',
-    },
-  },
+  plugins: [react(), pluginMdx()],
 })
-
-// buildStart pre
-// buildStart undefined
-// buildStart post

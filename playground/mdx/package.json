@@ -11,7 +11,8 @@
   },
   "dependencies": {
     "react": "^18.2.0",
-    "react-dom": "^18.2.0"
+    "react-dom": "^18.2.0",
+    "vite-plugin-mdx": "workspace:*"
   },
   "devDependencies": {
     "@mdx-js/mdx": "^2.3.0",

@@ -27,7 +27,6 @@
   "scripts": {
     "build": "tsup"
   },
-  "devDependencies": {},
   "engines": {
     "node": ">=14.19.0"
   }
