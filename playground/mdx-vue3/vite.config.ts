@@ -6,6 +6,11 @@ import pluginMdx from './src/plugin/plugin'
 
 // https://vitejs.dev/config/
 export default defineConfig({
+  resolve: {
+    alias: {
+      'vite-mdx': './plugin',
+    },
+  },
   plugins: [
     vue(),
     pluginMdx({}),

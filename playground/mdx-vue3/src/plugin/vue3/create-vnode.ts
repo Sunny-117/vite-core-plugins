@@ -11,7 +11,8 @@ const TYPE_PROP_NAME = 'mdxType'
 
 const DEFAULTS = {
   inlineCode: 'code',
-  wrapper: (props: any, { slots }: any) => createVNode(Fragment, {}, slots),
+  wrapper: (props: any, { slots }: any) =>
+    createVNode(Fragment, {}, slots.default && slots.default()),
 }
 const MDXCreateComponent = defineComponent({
   name: 'MDXCreateComponent',
@@ -40,12 +41,13 @@ const MDXCreateComponent = defineComponent({
         {
           ...etc,
         },
-        slots
+        slots.default && slots.default()
       )
     }
   },
 })
-export function mdx(
+// eslint-disable-next-line import/no-default-export
+export default function mdx(
   type: VNodeTypes,
   props: any,
   children: unknown,
