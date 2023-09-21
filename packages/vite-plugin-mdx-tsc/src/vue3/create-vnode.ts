@@ -1,52 +1,56 @@
 import {
   Fragment,
   type PropType,
-  type SetupContext,
   type VNodeTypes,
   createVNode,
   defineComponent,
-} from 'vue'
-import { type PropsComponents, useMDXComponents } from './context'
+  SetupContext,
+} from "vue";
+import { type PropsComponents, useMDXComponents } from "./context";
 
-const TYPE_PROP_NAME = 'mdxType'
+const TYPE_PROP_NAME = "mdxType";
 
-const DEFAULTS = {
-  inlineCode: 'code',
-  wrapper: (props: any, { slots }: SetupContext) =>
+const DEFAULTS: Record<string, VNodeTypes> = {
+  inlineCode: "code",
+  // @ts-ignore
+  wrapper: (_: any, { slots }: SetupContext) =>
     createVNode(Fragment, {}, slots.default && slots.default()),
-}
+};
 const MDXCreateComponent = defineComponent({
-  name: 'MDXCreateComponent',
+  name: "MDXCreateComponent",
   props: {
     components: {
       type: Object as PropType<PropsComponents>,
       default: () => ({}),
     },
     originalType: String,
-    mdxType: String,
+    mdxType: {
+      type: String,
+      required: true,
+    },
     parentName: String,
   },
   setup(props, { slots }) {
-    const componentsRef = useMDXComponents(() => props.components)
+    const componentsRef = useMDXComponents(() => props.components);
 
     return () => {
-      const components: any = componentsRef.value
-      const { parentName, originalType, mdxType: type, ...etc } = props
+      const components: any = componentsRef.value;
+      const { parentName, originalType, mdxType: type, ...etc } = props;
       const Component =
         components[`${parentName}.${type}`] ||
-        components[type!] ||
+        components[type] ||
         DEFAULTS[type] ||
-        originalType
+        originalType;
       return createVNode(
         Component,
         {
           ...etc,
         },
         slots.default && slots.default()
-      )
-    }
+      );
+    };
   },
-})
+});
 // eslint-disable-next-line import/no-default-export
 export default function mdx(
   type: VNodeTypes,
@@ -56,20 +60,20 @@ export default function mdx(
   dynamicProps?: string[] | null,
   isBlockNode?: boolean
 ) {
-  let component = type
-  let newProps = props
-  const mdxType = props && props.mdxType
-  if (typeof type === 'string' || mdxType) {
-    component = MDXCreateComponent
-    newProps = {}
+  let component = type;
+  let newProps = props;
+  const mdxType = props && props.mdxType;
+  if (typeof type === "string" || mdxType) {
+    component = MDXCreateComponent;
+    newProps = {};
     // eslint-disable-next-line no-restricted-syntax
     for (const key in props) {
       if (Object.prototype.hasOwnProperty.call(props, key)) {
-        newProps[key] = props[key]
+        newProps[key] = props[key];
       }
     }
-    newProps.originalType = type
-    newProps[TYPE_PROP_NAME] = typeof type === 'string' ? type : mdxType
+    newProps.originalType = type;
+    newProps[TYPE_PROP_NAME] = typeof type === "string" ? type : mdxType;
   }
   return createVNode(
     component,
@@ -78,5 +82,5 @@ export default function mdx(
     patchFlag,
     dynamicProps,
     isBlockNode
-  )
+  );
 }
