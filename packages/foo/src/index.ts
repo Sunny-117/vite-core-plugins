@@ -1,6 +1,7 @@
 import { Plugin } from 'vite'
 
 interface Options {}
+
 export const virtualModuleSignal = 'virtual-module'
 
 export default (options: Options): Plugin => {

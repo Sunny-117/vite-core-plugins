@@ -103,6 +103,12 @@ importers:
         specifier: ^1.8.5
         version: 1.8.27(typescript@5.6.2)
 
+  packages/vite-plugin-mock:
+    dependencies:
+      vite:
+        specifier: ^5.4.1
+        version: 5.4.8(@types/node@18.19.54)
+
   playground/demo:
     dependencies:
       react:
@@ -250,6 +256,28 @@ importers:
       vue-tsc:
         specifier: ^1.8.5
         version: 1.8.27(typescript@5.6.2)
+
+  playground/mock:
+    dependencies:
+      vue:
+        specifier: ^3.4.37
+        version: 3.5.10(typescript@5.6.2)
+    devDependencies:
+      '@scope/mock':
+        specifier: workspace:*
+        version: link:../../packages/vite-plugin-mock
+      '@vitejs/plugin-vue':
+        specifier: ^5.1.2
+        version: 5.1.4(vite@5.4.8(@types/node@18.19.54))(vue@3.5.10(typescript@5.6.2))
+      typescript:
+        specifier: ^5.5.3
+        version: 5.6.2
+      vite:
+        specifier: ^5.4.1
+        version: 5.4.8(@types/node@18.19.54)
+      vue-tsc:
+        specifier: ^2.0.29
+        version: 2.1.6(typescript@5.6.2)
 
 packages:
 
