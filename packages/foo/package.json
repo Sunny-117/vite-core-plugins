@@ -25,9 +25,13 @@
     "access": "public"
   },
   "scripts": {
-    "build": "tsup"
+    "build": "tsup",
+    "dev": "tsup --watch"
   },
   "engines": {
     "node": ">=14.19.0"
+  },
+  "peerDependencies": {
+    "vite": "^5.4.1"
   }
 }
