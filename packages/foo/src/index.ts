@@ -18,5 +18,14 @@ export default (options: Options): Plugin => {
       }
       return null
     },
+    configureServer(server) {
+      server.middlewares.use((req, res, next) => {
+        // mock
+        next()
+      })
+    },
+    transformIndexHtml(html) {
+      return '123'
+    },
   }
 }
