@@ -1,7 +1,7 @@
 import * as http from 'http'
 
 export interface Options {
-  entry: string
+  entry?: string
 }
 
 export interface Request {
