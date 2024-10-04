@@ -1,3 +1,4 @@
+// vitepress
 // build的时候
 // 静态站生成器
 // ssr实现静态站点导出
