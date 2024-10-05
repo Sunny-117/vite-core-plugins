@@ -1,27 +1,82 @@
-# React + TypeScript + Vite
+## Mdx 基础使用
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+```ts
+import { compile } from '@mdx-js/mdx'
+const code1 = `# hello`
+const code2 = `
+# hello
 
-Currently, two official plugins are available:
+> will this
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react/README.md) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+<Button>click me</Button>
 
-## Expanding the ESLint configuration
+- first
+- second
 
-If you are developing a production application, we recommend updating the configuration to enable type aware lint rules:
+export const a = 1;
+`
 
-- Configure the top-level `parserOptions` property like this:
+/**
+ * 关于mdx输出
+ *
+ * 通过注释的范式告诉jsx编译器标签的代码编译成什么样
+ * @jsxRuntime classic: 不希望import React
+ * @jsx mdx: 指定了mdx为jsx，MDXLayout，表示React.createElement会被编译成mdx
+ *      此处的mdx需要我们来import
+ */
 
-```js
-   parserOptions: {
-    ecmaVersion: 'latest',
-    sourceType: 'module',
-    project: ['./tsconfig.json', './tsconfig.node.json'],
-    tsconfigRootDir: __dirname,
-   },
+const res = await compile(code2)
+console.log(res.value)
+
+// https://github.com/mdx-js/mdx/tree/main/packages/loader
+// https://github.com/mdx-js/mdx/tree/main/packages/react
 ```
 
-- Replace `plugin:@typescript-eslint/recommended` to `plugin:@typescript-eslint/recommended-type-checked` or `plugin:@typescript-eslint/strict-type-checked`
-- Optionally add `plugin:@typescript-eslint/stylistic-type-checked`
-- Install [eslint-plugin-react](https://github.com/jsx-eslint/eslint-plugin-react) and add `plugin:react/recommended` & `plugin:react/jsx-runtime` to the `extends` list
+## @mdx-js/react源码
+
+```ts
+import React from 'react'
+
+export const MDXContext = React.createContext({})
+
+export function withMDXComponents(Component) {
+  return boundMDXComponent
+  function boundMDXComponent(props) {
+    const allComponents = useMDXComponents(props.components)
+    return React.createElement(Component, { ...props, allComponents })
+  }
+}
+
+export function useMDXComponents(components) {
+  const contextComponents = React.useContext(MDXContext)
+
+  return React.useMemo(() => {
+    if (typeof components === 'function') {
+      return components(contextComponents)
+    }
+
+    return { ...contextComponents, ...components }
+  }, [contextComponents, components])
+}
+
+const emptyObject = {}
+
+export function MDXProvider({ components, children, disableParentContext }) {
+  let allComponents
+
+  if (disableParentContext) {
+    allComponents =
+      typeof components === 'function'
+        ? components({})
+        : components || emptyObject
+  } else {
+    allComponents = useMDXComponents(components)
+  }
+
+  return React.createElement(
+    MDXContext.Provider,
+    { value: allComponents },
+    children
+  )
+}
+```

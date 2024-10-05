@@ -1,6 +1,7 @@
 import { defineConfig } from 'vite'
 import react from '@vitejs/plugin-react'
 import pluginMdx, { Framework } from './src/plugin/plugin'
+import inspect from 'vite-plugin-inspect'
 
 // https://vitejs.dev/config/
 export default defineConfig({
@@ -21,5 +22,6 @@ export default defineConfig({
     react({
       include: /\.(mdx|jsx|tsx)/,
     }),
+    inspect(),
   ],
 })
