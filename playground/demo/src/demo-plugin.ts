@@ -10,8 +10,8 @@ export default function demoPlugin(enforce?: 'pre' | 'post'): Plugin {
     resolveId() {
       // console.log('解析某个文件的时候才会调用', enforce)
     },
-    load() {
-      // console.log('load', enforce)
+    load(id, options) {
+      // console.log('load', enforce, { id, options })
     },
     config(userConfig) {
       return {
@@ -40,7 +40,7 @@ export default function demoPlugin(enforce?: 'pre' | 'post'): Plugin {
       // return html.replace('id="root"', 'id="foo"')
     },
     handleHotUpdate(ctx) {
-      // console.log(ctx, 'handleHotUpdate')
+      console.log(ctx, 'handleHotUpdate')
       // 热更新定制化
       ctx.server.ws.send({
         type: 'custom',
